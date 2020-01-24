@@ -10,7 +10,6 @@ from dash.dependencies import Input, Output, State
 import cufflinks as cf
 
 # Initialize app
-
 app = dash.Dash(
     __name__,
     meta_tags=[
@@ -19,8 +18,14 @@ app = dash.Dash(
 )
 server = app.server
 
-# Load data
+# Adding favicon
+@app.route('/favicon.ico') # change this
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static', 'images'),
+                               'favicon.ico', mimetype='image/png')
 
+
+# Load data
 APP_PATH = str(pathlib.Path(__file__).parent.resolve())
 
 df_lat_lon = pd.read_csv(
@@ -40,6 +45,7 @@ df_full_data["County"] = (
     df_full_data["Unnamed: 0"] + ", " + df_full_data.County.map(str)
 )
 
+# Select years
 YEARS = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015]
 
 BINS = [
@@ -86,7 +92,6 @@ mapbox_access_token = "pk.eyJ1IjoicGxvdGx5bWFwYm94IiwiYSI6ImNqdnBvNDMyaTAxYzkzeW
 mapbox_style = "mapbox://styles/plotlymapbox/cjvprkf3t1kns1cqjxuxmwixz"
 
 # App layout
-
 app.layout = html.Div(
     id="root",
     children=[
