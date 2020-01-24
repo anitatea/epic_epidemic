@@ -12,6 +12,7 @@ dill = "*"
 flask = "*"
 gunicorn = "*"
 requests = "*"
+dash = "*"
 
 [requires]
 python_version = "3.7"
