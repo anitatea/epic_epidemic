@@ -1,6 +1,8 @@
 import os
 import pathlib
 import re
+from flask import Flask, request, render_template, send_from_directory, Response
+
 
 import dash
 import dash_core_components as dcc
@@ -10,13 +12,16 @@ from dash.dependencies import Input, Output, State
 import cufflinks as cf
 
 # Initialize app
+# app = Flask(__name__)
+
+# original
 app = dash.Dash(
     __name__,
     meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1.0"}
     ],
 )
-server = app.server
+# server = app.server
 
 # Adding favicon
 # @app.route('/favicon.ico') # change this
