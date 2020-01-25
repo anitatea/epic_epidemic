@@ -10,10 +10,8 @@ import pandas as pd
 from dash.dependencies import Input, Output, State
 import cufflinks as cf
 
-# Initialize app
-# app = Flask(__name__)
 
-# original
+# Initialize app
 app = dash.Dash(
     __name__,
     meta_tags=[
