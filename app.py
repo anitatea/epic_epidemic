@@ -1,7 +1,6 @@
 import os
 import pathlib
 import re
-from flask import Flask, request, render_template, send_from_directory, Response
 
 
 import dash
@@ -21,7 +20,7 @@ app = dash.Dash(
         {"name": "viewport", "content": "width=device-width, initial-scale=1.0"}
     ],
 )
-# server = app.server
+server = app.server
 
 # Adding favicon
 # @app.route('/favicon.ico') # change this
