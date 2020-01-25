@@ -19,10 +19,10 @@ app = dash.Dash(
 server = app.server
 
 # Adding favicon
-@app.route('/favicon.ico') # change this
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static', 'images'),
-                               'favicon.ico', mimetype='image/png')
+# @app.route('/favicon.ico') # change this
+# def favicon():
+#     return send_from_directory(os.path.join(app.root_path, 'static', 'images'),
+#                                'favicon.ico', mimetype='image/png')
 
 
 # Load data
