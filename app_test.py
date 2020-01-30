@@ -6,6 +6,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
+import plotly.graph_objs as go
 from dash.dependencies import Input, Output, State
 import cufflinks as cf
 
@@ -40,68 +41,6 @@ df_full_data = pd.read_csv(
         APP_PATH, os.path.join("data", "age_adjusted_death_rate_no_quotes.csv")
     )
 )
-# TESTING!! -----------------------------------------------------
-df_full_data = pd.read_csv('old_data.csv')
-df_state = df_full_data.dropna()
-
-
-df_state['County'] = df_state['County'].astype(str)
-
-df_state['Deaths'] = pd.to_numeric(df_state['Deaths'], errors="coerce")
-df_state = df_state[df_state['Year'] == 2015]
-
-df_state.info()
-
-df_state = pd.DataFrame(df_state.groupby('County')['Deaths'].sum()).reset_index()
-
-df_state.head()
-import plotly.plotly as py
-
-import plotly.graph_objs as go
-
-data = [go.Choropleth(
-    colorscale = 'Viridis',
-    autocolorscale = True,
-    locations = df_state['County'],
-    z = df_state['Deaths'].astype(float),
-    locationmode = 'USA-states',
-    text = df_state['Deaths']
-    # marker = go.choropleth.Marker(
-    #     line = go.choropleth.marker.Line(
-    #         color = 'rgb(255,255,255)',
-    #         width = 2
-        # )),
-    # colorbar = go.choropleth.ColorBar(
-    # title = "Millions USD")
-)]
-
-layout = go.Layout(
-    title = go.layout.Title(
-        text = '2011 US Agriculture Exports by State<br>(Hover for breakdown)'
-    ),
-    geo = go.layout.Geo(
-        scope = 'usa',
-        projection = go.layout.geo.Projection(type = 'albers usa'),
-        showlakes = True,
-        lakecolor = 'rgb(255, 255, 255)'),
-)
-
-fig = go.Figure(data = data, layout = layout)
-# py.iplot(fig, filename = 'd3-cloropleth-map')
-
-# fig.update_layout(
-#     title_text = '2011 US Agriculture Exports by State',
-#     geo_scope='usa', # limite map scope to USA
-# )
-
-fig.show()
-
-# END TEST -------------------------------------------
-
-
-
-
-
 
 # changes county code to 5 digits
 df_full_data["County Code"] = df_full_data["County Code"].apply(
@@ -113,7 +52,7 @@ df_full_data["County"] = (
 )
 
 # Select years
-YEARS = [2009, 2010, 2011, 2012, 2013, 2014, 2015]
+YEARS = [2011, 2012, 2013, 2014, 2015]
 
 BINS = [
     "0-2",
@@ -165,15 +104,16 @@ app.layout = html.Div(
         html.Div(
             id="header",
             children=[
-                html.Img(id="logo", src=app.get_asset_url("dash-logo.png")),
-                html.H4(children="Rate of US Poison-Induced Deaths"),
+#                html.Img(id="logo", src=app.get_asset_url("dash-logo.png")),
+                html.H4(children="US Poison-Induced Deaths"),
                 html.P(
                     id="description",
                     children="† Deaths are classified using the International Classification of Diseases, \
                     Tenth Revision (ICD–10). Drug-poisoning deaths are defined as having ICD–10 underlying \
                     cause-of-death codes X40–X44 (unintentional), X60–X64 (suicide), X85 (homicide), or Y10–Y14 \
-                    (undetermined intent). Click here for more information.",
-                    href='https://www.cdc.gov/nchs/data-visualization/drug-poisoning-mortality/#ref9'
+                    (undetermined intent)."
+                    # Click here for more information.", className='three columns'),
+                    # href='https://www.cdc.gov/nchs/data-visualization/drug-poisoning-mortality/#ref9'
                 ),
             ],
         ),
@@ -222,7 +162,8 @@ app.layout = html.Div(
                                             dict(
                                                 lat=df_lat_lon["Latitude "],
                                                 lon=df_lat_lon["Longitude"],
-                                                text=df_lat_lon["Hover"],
+                                                text=df_full_data["County", 'Deaths],
+                                                # text doesn't have much effect
                                                 type="scattermapbox",
                                             )
                                         ],
@@ -303,7 +244,7 @@ def display_map(year, figure):
         dict(
             lat=df_lat_lon["Latitude "],
             lon=df_lat_lon["Longitude"],
-            text=df_lat_lon["Hover"],
+            text=df_full_data["County", 'Deaths'],
             type="scattermapbox",
             hoverinfo="text",
             marker=dict(size=5, color="white", opacity=0),

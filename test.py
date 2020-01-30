@@ -22,9 +22,10 @@ import pandas as pd
 
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv')
 
-df.head()
+df['total exports'].max()
 
-df.shape
+df[df['total exports']==df['total exports'].max()]
+
 
 for col in df.columns:
     df[col] = df[col].astype(str)
@@ -38,6 +39,9 @@ scl = [
     [1.0, 'rgb(84,39,143)']
 ]
 
+df['code'].unique()
+
+
 df['text'] = df['state'] + '<br>' + \
     'Beef ' + df['beef'] + ' Dairy ' + df['dairy'] + '<br>' + \
     'Fruits ' + df['total fruits'] + ' Veggies ' + df['total veggies'] + '<br>' + \
@@ -47,9 +51,9 @@ data = [go.Choropleth(
     colorscale = scl,
     autocolorscale = False,
     locations = df['code'],
-    z = df['total exports'].astype(float),
+    z = dff['Deaths'].astype(float),
     locationmode = 'USA-states',
-    text = df['text'],
+    text = df['state'],
     marker = go.choropleth.Marker(
         line = go.choropleth.marker.Line(
             color = 'rgb(255,255,255)',
@@ -77,18 +81,22 @@ fig.show()
 
 
 dff = pd.read_csv('old_data.csv')
-dff = df.dropna()
-
-dff.head()
+dff = dff.dropna()
 
 dff['Deaths'] = pd.to_numeric(dff['Deaths'], errors="coerce")
 dff = dff[dff['Year'] == 2015]
 
+dff = pd.DataFrame(dff.groupby('County')['Deaths'].sum()).reset_index()
 
-dff.shape
+dff = dff.rename(columns={'County': 'code'})
 
-for col in df.columns:
-    df[col] = df[col].astype(str)
+dff['code'] = dff['code'].str.strip()
+
+dff.head()
+
+
+for col in dff.columns:
+    dff[col] = dff[col].astype(str)
 
 scl = [
     [0.0, 'rgb(242,240,247)'],
@@ -98,23 +106,22 @@ scl = [
     [0.8, 'rgb(117,107,177)'],
     [1.0, 'rgb(84,39,143)']
 ]
-
-dff['text'] = dff['County'] + '<br>' + dff['Deaths']
+#dff['text'] = dff['code'] + '<br>' + dff['Deaths']
 
 data = [go.Choropleth(
     colorscale = scl,
     autocolorscale = False,
-    locations = df['County'],
-    z = df['Deaths'].astype(float),
+    locations = dff['code'],
+    z = dff['Deaths'].astype(float),
     locationmode = 'USA-states',
-    text = df['text'],
+    text = dff['code'],
     marker = go.choropleth.Marker(
         line = go.choropleth.marker.Line(
             color = 'rgb(255,255,255)',
             width = 2
         )),
     colorbar = go.choropleth.ColorBar(
-        title = "Millions USD")
+        title = "hello")
 )]
 
 layout = go.Layout(
