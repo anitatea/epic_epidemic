@@ -48,7 +48,7 @@ df_full_data["County"] = (
 )
 
 # Select years
-YEARS = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015]
+YEARS = [2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015]
 
 BINS = [
     "0-2",
@@ -192,7 +192,7 @@ app.layout = html.Div(
                                     "value": "show_absolute_deaths_single_year",
                                 },
                                 {
-                                    "label": "Histogram of total number of deaths (1999-2016)",
+                                    "label": "Histogram of total number of deaths (2005-2015)",
                                     "value": "absolute_deaths_all_time",
                                 },
                                 {
@@ -200,7 +200,7 @@ app.layout = html.Div(
                                     "value": "show_death_rate_single_year",
                                 },
                                 {
-                                    "label": "Trends in age-adjusted death rate (1999-2016)",
+                                    "label": "Trends in age-adjusted death rate (2005-2015)",
                                     "value": "death_rate_all_time",
                                 },
                             ],
@@ -355,7 +355,7 @@ def display_selected_data(selectedData, chart_dropdown, year):
     dff["Age Adjusted Rate"] = dff["Age Adjusted Rate"].replace(regex_pat, 0)
 
     if chart_dropdown != "death_rate_all_time":
-        title = "Absolute deaths per county, <b>1999-2016</b>"
+        title = "Absolute deaths per county, <b>2005-2015</b>"
         AGGREGATE_BY = "Deaths"
         if "show_absolute_deaths_single_year" == chart_dropdown:
             dff = dff[dff.Year == year]

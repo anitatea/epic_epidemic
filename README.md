@@ -1,6 +1,6 @@
-# An Epicdemic: US Deaths From Drug Overdose Poisoning
+# An Epic-demic: Dashboard of US Deaths From Drug-Induced Poisoning
 
-Poison induced death data was downloaded from [CDC Wonder](dash_app_screencast.gif), driven by opioid and heroin usage. Dataset uses cause-of-death codes X40–X44 (unintentional), X60–X64 (suicide), X85 (homicide), or Y10–Y14 (undetermined intent).
+Drug poisoning induced mortality data was downloaded from [CDC Wonder](dash_app_screencast.gif), found to be driven by opioid and heroin usage (See Technical Notes in link for more details). Dataset uses cause-of-death codes X40–X44 (unintentional), X60–X64 (suicide), X85 (homicide), or Y10–Y14 (undetermined intent).
 
 [View the app](http://epic-epidemic.herokuapp.com/)
 
