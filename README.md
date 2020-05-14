@@ -5,3 +5,6 @@ Drug poisoning induced mortality data was downloaded from [CDC Wonder](dash_app_
 [View the app](http://epic-epidemic.herokuapp.com/)
 
 App inspired by [this Tableau dashboard](https://www.cdc.gov/nchs/data-visualization/drug-poisoning-mortality/)
+
+<img src="https://github.com/anitatea/epic_epidemic/blob/master/assets/app_screencast.gif?raw=true">
+
